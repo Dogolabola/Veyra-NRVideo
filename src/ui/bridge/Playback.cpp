@@ -309,12 +309,15 @@ void QmlPlayerBridge::openPath(const QString& path) {
 bool QmlPlayerBridge::deinterlaceAvailable() const { return media::FFmpegDeinterlacer::available(); }
 void QmlPlayerBridge::openNetworkDialog(){emit navigate(QStringLiteral("network"));}
 bool QmlPlayerBridge::openNetworkAddress(const QString& address){
-    const QString trimmed = address.trimmed();
+    QString trimmed = address.trimmed();
+    // SRT access-control stream IDs start with "#!::"; a raw '#' would be taken for a URL fragment.
+    const bool srt = trimmed.startsWith(QLatin1String("srt:"),Qt::CaseInsensitive);
+    if(srt)trimmed.replace(QLatin1Char('#'),QLatin1String("%23"));
     const QUrl url(trimmed,QUrl::StrictMode);
     const bool datagram = url.scheme()==QLatin1String("rtp") || url.scheme()==QLatin1String("udp");
-    if(!url.isValid()||url.host().isEmpty()||(datagram&&url.port()<=0)
+    if(!url.isValid()||url.host().isEmpty()||((datagram||srt)&&url.port()<=0)
        ||!media::networkMediaInput(wideOf(url.scheme()+QStringLiteral(":")))){
-        emit notice(tr("请输入有效的 HTTP、HTTPS、RTSP、RTP 或 UDP 视频地址"),true);return false;
+        emit notice(tr("请输入有效的 HTTP、HTTPS、RTSP、RTP、UDP 或 SRT 视频地址"),true);return false;
     }
     openPath(url.adjusted(QUrl::RemoveFragment).toString(QUrl::FullyEncoded));return true;
 }

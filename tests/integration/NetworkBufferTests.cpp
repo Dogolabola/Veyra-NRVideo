@@ -103,6 +103,7 @@ int selfTest() {
     int failures = 0;
     auto check = [&](bool ok, const char* name) { failures += !ok; std::cout << (ok ? "PASS " : "FAIL ") << name << std::endl; };
     check(media::networkMediaInput(L"http://example.com/a.mp4") && media::networkMediaInput(L"RTSP://cam/x") && media::networkMediaInput(L"https://x/y.m3u8"), "network schemes recognised");
+    check(media::networkMediaInput(L"srt://host:9000?streamid=a") && media::srtMediaInput(L"SRT://h:1") && !media::srtMediaInput(L"srt.mkv"), "srt scheme recognised");
     check(!media::networkMediaInput(L"C:\\video\\a.mkv") && !media::networkMediaInput(L"\\\\nas\\share\\a.mkv") && !media::networkMediaInput(L"file:///c:/a.mp4"), "paths are not network addresses");
     check(media::remoteMediaPath(L"\\\\nas\\share\\movies\\a.mkv") && media::remoteMediaPath(L"\\\\?\\UNC\\nas\\share\\a.mkv"), "UNC paths are server files");
     check(!media::remoteMediaPath(L"\\\\?\\C:\\video\\a.mkv") && !media::remoteMediaPath(L"\\\\.\\C:\\a.mkv") && !media::remoteMediaPath(L"relative\\a.mkv") && !media::remoteMediaPath(L"C:\\Windows\\a.mkv"), "local paths are not server files");

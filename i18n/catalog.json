@@ -29825,16 +29825,16 @@
    "ru": "Целевые строки"
   },
   {
-   "zh": "直接打开 HTTP、HTTPS、RTSP、RTP 或 UDP 视频流",
+   "zh": "直接打开 HTTP、HTTPS、RTSP、RTP、UDP 或 SRT 视频流",
    "src": "qml/NetworkSourceDialog.qml",
-   "zh-TW": "直接開啟 HTTP、HTTPS、RTSP、RTP 或 UDP 影片串流",
-   "en": "Open a video stream over HTTP, HTTPS, RTSP, RTP, or UDP.",
+   "zh-TW": "直接開啟 HTTP、HTTPS、RTSP、RTP、UDP 或 SRT 影片串流",
+   "en": "Open a video stream over HTTP, HTTPS, RTSP, RTP, UDP, or SRT.",
    "ja": "HTTP、HTTPS、RTSP、RTP、UDP の動画ストリームを開きます。",
    "ko": "HTTP, HTTPS, RTSP, RTP 또는 UDP 영상 스트림을 엽니다.",
    "es": "Abrir un flujo de vídeo por HTTP, HTTPS, RTSP, RTP o UDP",
    "fr": "Ouvrir un flux vidéo via HTTP, HTTPS, RTSP, RTP ou UDP",
    "de": "Videostream über HTTP, HTTPS, RTSP, RTP oder UDP öffnen",
-   "pt-BR": "Abrir um fluxo de vídeo via HTTP, HTTPS, RTSP, RTP ou UDP",
+   "pt-BR": "Abrir um fluxo de vídeo via HTTP, HTTPS, RTSP, RTP, UDP ou SRT",
    "ru": "Открыть видеопоток по HTTP, HTTPS, RTSP, RTP или UDP"
   },
   {
@@ -35220,16 +35220,16 @@
    "ru": "Угостить автора кофе"
   },
   {
-   "zh": "请使用直接媒体地址。RTP 和 UDP 的 MPEG-TS 地址需要包含端口。",
+   "zh": "请使用直接媒体地址。RTP、UDP 和 SRT 地址需要包含端口。",
    "src": "qml/NetworkSourceDialog.qml",
-   "zh-TW": "請使用直接媒體網址。RTP 和 UDP 的 MPEG-TS 網址需要包含連接埠。",
-   "en": "Use a direct media URL. Include a port in RTP and UDP MPEG-TS URLs.",
+   "zh-TW": "請使用直接媒體網址。RTP、UDP 和 SRT 網址需要包含連接埠。",
+   "en": "Use a direct media URL. Include a port in RTP, UDP, and SRT URLs.",
    "ja": "メディアの直接 URL を入力してください。RTP と UDP の MPEG-TS URL にはポートが必要です。",
    "ko": "직접 미디어 URL을 입력하세요. RTP 및 UDP MPEG-TS URL에는 포트가 필요합니다.",
    "es": "Usa la URL directa del medio. Las direcciones MPEG-TS por RTP y UDP deben incluir un puerto.",
    "fr": "Utilisez l’URL directe du média. Les adresses MPEG-TS sur RTP et UDP doivent inclure un port.",
    "de": "Verwende eine direkte Medien-URL. MPEG-TS-Adressen über RTP oder UDP müssen einen Port enthalten.",
-   "pt-BR": "Use a URL direta da mídia. Endereços MPEG-TS via RTP ou UDP precisam incluir uma porta.",
+   "pt-BR": "Use a URL direta da mídia. Endereços RTP, UDP e SRT precisam incluir uma porta.",
    "ru": "Используйте прямой URL медиа. В адресах MPEG-TS по RTP и UDP укажите порт."
   },
   {
@@ -35727,16 +35727,16 @@
    "ru": "Enter скорость между 0,25 и 4,00"
   },
   {
-   "zh": "请输入有效的 HTTP、HTTPS、RTSP、RTP 或 UDP 视频地址",
+   "zh": "请输入有效的 HTTP、HTTPS、RTSP、RTP、UDP 或 SRT 视频地址",
    "src": "src/ui/bridge/Playback.cpp",
-   "zh-TW": "請輸入有效的 HTTP、HTTPS、RTSP、RTP 或 UDP 影片網址",
-   "en": "Enter a valid HTTP, HTTPS, RTSP, RTP, or UDP video URL.",
+   "zh-TW": "請輸入有效的 HTTP、HTTPS、RTSP、RTP、UDP 或 SRT 影片網址",
+   "en": "Enter a valid HTTP, HTTPS, RTSP, RTP, UDP, or SRT video URL.",
    "ja": "有効な HTTP、HTTPS、RTSP、RTP または UDP の動画 URL を入力してください。",
    "ko": "유효한 HTTP, HTTPS, RTSP, RTP 또는 UDP 영상 URL을 입력하세요.",
    "es": "Introduce una URL de vídeo válida por HTTP, HTTPS, RTSP, RTP o UDP.",
    "fr": "Saisissez une URL vidéo valide en HTTP, HTTPS, RTSP, RTP ou UDP.",
    "de": "Gib eine gültige Video-URL mit HTTP, HTTPS, RTSP, RTP oder UDP ein.",
-   "pt-BR": "Insira uma URL de vídeo válida via HTTP, HTTPS, RTSP, RTP ou UDP.",
+   "pt-BR": "Insira uma URL de vídeo válida via HTTP, HTTPS, RTSP, RTP, UDP ou SRT.",
    "ru": "Введите действительный URL видео по HTTP, HTTPS, RTSP, RTP или UDP."
   },
   {
@@ -43226,6 +43226,58 @@
    "de": "Hoch standardmäßig. Wenn ein Spiel oder ein anderes schweres Programm, das nebenbei läuft, langsamer wird, wählen Sie Normal",
    "pt-BR": "; Alta por padrão. Se um jogo ou outro programa pesado em execução ao lado desacelera, escolha Normal",
    "ru": "; высокий по умолчанию. Если игра или другая тяжелая программа, работающая рядом, замедляется, выберите Normal."
+  },
+  {
+   "zh": "IRL 60 帧（SRT → OBS）",
+   "src": "qml/Veyra/NetworkSourceDialog.qml",
+   "zh-TW": "IRL 60 幀（SRT → OBS）",
+   "en": "IRL 60 fps (SRT → OBS)",
+   "ja": "IRL 60 fps（SRT → OBS）",
+   "pt-BR": "IRL 60 fps (SRT → OBS)",
+   "ko": "IRL 60 fps (SRT → OBS)",
+   "es": "IRL 60 fps (SRT → OBS)",
+   "fr": "IRL 60 fps (SRT → OBS)",
+   "de": "IRL 60 fps (SRT → OBS)",
+   "ru": "IRL 60 fps (SRT → OBS)"
+  },
+  {
+   "zh": "打开时启用 NVIDIA VFG 2X 和虚拟摄像机。30 帧输入输出 60 帧。",
+   "src": "qml/Veyra/NetworkSourceDialog.qml",
+   "zh-TW": "開啟時啟用 NVIDIA VFG 2X 和虛擬攝影機。30 幀輸入輸出 60 幀。",
+   "en": "On open, turns on NVIDIA VFG 2X and the virtual camera. A 30 fps feed comes out at 60 fps.",
+   "ja": "開くと NVIDIA VFG 2X と仮想カメラを有効にします。30 fps の入力を 60 fps で出力します。",
+   "pt-BR": "Ao abrir, liga o NVIDIA VFG 2X e a câmera virtual. Entrada de 30 fps sai em 60 fps.",
+   "ko": "On open, turns on NVIDIA VFG 2X and the virtual camera. A 30 fps feed comes out at 60 fps.",
+   "es": "On open, turns on NVIDIA VFG 2X and the virtual camera. A 30 fps feed comes out at 60 fps.",
+   "fr": "On open, turns on NVIDIA VFG 2X and the virtual camera. A 30 fps feed comes out at 60 fps.",
+   "de": "On open, turns on NVIDIA VFG 2X and the virtual camera. A 30 fps feed comes out at 60 fps.",
+   "ru": "On open, turns on NVIDIA VFG 2X and the virtual camera. A 30 fps feed comes out at 60 fps."
+  },
+  {
+   "zh": "记住地址",
+   "src": "qml/Veyra/NetworkSourceDialog.qml",
+   "zh-TW": "記住位址",
+   "en": "Remember address",
+   "ja": "アドレスを記憶",
+   "pt-BR": "Lembrar endereço",
+   "ko": "Remember address",
+   "es": "Remember address",
+   "fr": "Remember address",
+   "de": "Remember address",
+   "ru": "Remember address"
+  },
+  {
+   "zh": "地址以明文保存在本机，可能包含推流密钥。",
+   "src": "qml/Veyra/NetworkSourceDialog.qml",
+   "zh-TW": "位址以明文儲存在本機，可能包含推流金鑰。",
+   "en": "Stored on this PC as plain text; it may contain your stream key.",
+   "ja": "アドレスはこの PC に平文で保存され、ストリームキーを含む場合があります。",
+   "pt-BR": "Salvo neste PC como texto simples; pode conter sua chave de transmissão.",
+   "ko": "Stored on this PC as plain text; it may contain your stream key.",
+   "es": "Stored on this PC as plain text; it may contain your stream key.",
+   "fr": "Stored on this PC as plain text; it may contain your stream key.",
+   "de": "Stored on this PC as plain text; it may contain your stream key.",
+   "ru": "Stored on this PC as plain text; it may contain your stream key."
   }
  ]
 }

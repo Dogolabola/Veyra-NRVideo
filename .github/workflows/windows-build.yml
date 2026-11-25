@@ -113,7 +113,7 @@ jobs:
         uses: actions/cache/restore@5a3ec84eff668545956fd18022155c47e93e2684 # v4.2.3
         with:
           path: C:\vcache
-          key: vcpkg-${{ env.VCPKG_COMMIT }}-${{ env.OVERLAY_HASH }}-v1
+          key: vcpkg-${{ env.VCPKG_COMMIT }}-${{ env.OVERLAY_HASH }}-srt-v1
 
       - name: Build FFmpeg 9.0.1 (slices256, deinterlace, D3D12VA reference pool), dav1d, zlib and libass
         env:
@@ -123,7 +123,7 @@ jobs:
           New-Item -ItemType Directory -Force C:\vcache | Out-Null
           # --classic: vcpkg.json in the repo root would otherwise force manifest mode.
           C:\v\vcpkg.exe install --classic --overlay-ports=C:\vcpkg-overlay --clean-after-build `
-            'ffmpeg[core,avcodec,avformat,avfilter,swresample,swscale,dav1d,zlib]:x64-windows' `
+            'ffmpeg[core,avcodec,avformat,avfilter,swresample,swscale,dav1d,zlib,srt]:x64-windows' `
             'libass:x64-windows-static'
           $list = C:\v\vcpkg.exe list --classic
           $list | Set-Content -Encoding utf8 C:\vcpkg-list.txt
@@ -135,7 +135,17 @@ jobs:
         uses: actions/cache/save@5a3ec84eff668545956fd18022155c47e93e2684 # v4.2.3
         with:
           path: C:\vcache
-          key: vcpkg-${{ env.VCPKG_COMMIT }}-${{ env.OVERLAY_HASH }}-v1
+          key: vcpkg-${{ env.VCPKG_COMMIT }}-${{ env.OVERLAY_HASH }}-srt-v1
+
+      - name: Stage CUDA driver headers (NVIDIA VFG)
+        run: |
+          $zip = 'C:\cudart.zip'
+          Invoke-WebRequest 'https://developer.download.nvidia.com/compute/cuda/redist/cuda_cudart/windows-x86_64/cuda_cudart-windows-x86_64-12.8.90-archive.zip' -OutFile $zip
+          if ((Get-FileHash $zip).Hash -ne '4a39058fd8519444a81cfc7ae055d136f48d1a31ffa41ae255b35b2edd61e13b') { throw 'cudart hash mismatch' }
+          Expand-Archive $zip C:\cudart
+          $inc = (Get-ChildItem C:\cudart -Recurse -Filter cuda.h | Select-Object -First 1).DirectoryName
+          if (-not $inc) { throw 'cuda.h missing' }
+          "CUDA_INC=$($inc -replace '\\','/')" >> $env:GITHUB_ENV
 
       - name: Configure (preset x64-release)
         run: |
@@ -146,6 +156,7 @@ jobs:
             -DVEYRA_FFMPEG_ROOT=C:/v/installed/x64-windows `
             -DVEYRA_LIBASS_ROOT=C:/v/installed/x64-windows-static `
             -DVEYRA_LIBDOVI_ROOT=C:/dovi `
+            "-DVEYRA_CUDA_DRIVER_INCLUDE_DIR=$env:CUDA_INC" `
             "-DCMAKE_PREFIX_PATH=$env:QT_ROOT_DIR"
 
       - name: Build veyra_qml_ui, virtual camera and shaders
@@ -174,6 +185,7 @@ jobs:
           }
           Copy-Item C:\v\installed\x64-windows\bin\*.dll $stage
           Copy-Item C:\dovi\bin\*.dll $stage
+          if (-not (Test-Path "$stage\*srt*.dll")) { throw 'srt.dll missing from the FFmpeg build' }
           & "$env:QT_ROOT_DIR\bin\windeployqt.exe" --release --qmldir qml --no-translations `
             --skip-plugin-types qmltooling,generic "$stage\veyra_qml_ui.exe"
           if ($LASTEXITCODE -ne 0) { throw "windeployqt failed with exit code $LASTEXITCODE" }

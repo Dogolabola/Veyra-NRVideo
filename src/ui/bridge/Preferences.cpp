@@ -219,7 +219,7 @@ bool QmlPlayerBridge::setPreference(const QString& key, const QVariant& value) {
         {"replaySeconds", {15, 600}}};
     static const QStringList flags{"recordHevc", "recordAudio", "recordMic", "recordMicTrack", "replayEnabled", "subtitleEnabled", "subtitleBackground", "subtitleFit",
                                    "subtitleSecondLanguage", "audioForceStereo", "captureAudioMonitor", "captureHdmiPassthrough", "holdCompare",
-                                   "magewellLowLatency", "blackmagicNativeCapture", "captureShowAllFrameRates", "cinePillHidden", "exportStopsPlayback", "obsGameCapture", "autoResume", "fullscreenMemoryProtection", "prewarmEnhancement", "hdrFgCompatibility", "computeOnMonitorGpu", "deinterlace", "networkAutoReconnect",
+                                   "magewellLowLatency", "blackmagicNativeCapture", "captureShowAllFrameRates", "cinePillHidden", "exportStopsPlayback", "obsGameCapture", "autoResume", "fullscreenMemoryProtection", "prewarmEnhancement", "hdrFgCompatibility", "computeOnMonitorGpu", "deinterlace", "networkAutoReconnect", "networkIrl60", "networkRemember",
                                    // 设置 → 外观 → 启动动画 / 启动音乐 / 剔除遮罩（2.1.9）
                                    "introAnimation", "introMusic", "exclusionOverlay", "fullscreenFrameStats"};
     QVariant stored;
@@ -248,6 +248,11 @@ bool QmlPlayerBridge::setPreference(const QString& key, const QVariant& value) {
         const QString dir = value.toString();
         if (!dir.isEmpty() && !QFileInfo(dir).isDir()) { emit notice(tr("录制目录不存在：%1").arg(dir), true); return false; }
         stored = dir;
+    } else if (key == QLatin1String("networkAddress")) {
+        // Only written while 记住地址 is on; may contain an SRT stream ID.
+        const QString address = value.toString();
+        if (address.size() > 2048) return false;
+        stored = address;
     } else if (key == QLatin1String("audioDevice")) {
         stored = value.toString();
     } else if (key == QLatin1String("recordMicDevice")) {

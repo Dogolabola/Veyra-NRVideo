@@ -540,7 +540,7 @@ std::shared_ptr<DemuxSession> DemuxSession::open(const OpenParams& params, std::
     // else (RTSP, HTTP-TS without length, live HLS) is live: no seek, no resume point.
     s.live_ = !(s.durationUs_ > 0 && (byteSeekable || hls));
     if (s.network_ && (s.formatName_.find("rtsp") != std::string::npos ||
-                       s.formatName_ == "rtp" || datagramMediaInput(s.path_))) s.live_ = true;
+                       s.formatName_ == "rtp" || datagramMediaInput(s.path_) || srtMediaInput(s.path_))) s.live_ = true;
     if (s.network_ && s.live_) s.timeshiftUs_=int64_t(std::clamp(params.settings.timeshiftSeconds,0,600))*1000000;
     s.timelineStartUs_=s.startTimeUs_;
     s.plan_ = networkBufferPlan(s.settings_, s.live_);
@@ -1490,7 +1490,8 @@ bool DemuxSession::recover(int code, const char* why) {
     int delayMs = 1000;
     uint32_t attempt = 0;
     while (!stop_.load() && !(cancelled_ && cancelled_->load())) {
-        if (std::chrono::duration_cast<std::chrono::milliseconds>(Clock::now() - begin).count() >= reconnectBudgetMs_) break;
+        if (std::chrono::duration_cast<std::chrono::milliseconds>(Clock::now() - begin).count() >= reconnectBudgetMs_ &&
+            !(live_ && srtMediaInput(path_))) break;   // an IRL feed may be gone for minutes: keep trying until the user stops
         // Back off, but give way at once to a seek or a stop.
         if (!irq_->sleep(delayMs)) {
             std::lock_guard lock(m_);

@@ -25,12 +25,16 @@ inline bool datagramMediaInput(std::wstring_view path) {
                                _wcsnicmp(path.data(), L"udp:", 4) == 0);
 }
 
+inline bool srtMediaInput(std::wstring_view path) {
+    return path.size() >= 4 && _wcsnicmp(path.data(), L"srt:", 4) == 0;
+}
+
 inline bool networkMediaInput(std::wstring_view path) {
     const auto colon=path.find(L':');
     if(colon==std::wstring_view::npos||colon>5)return false;
     std::wstring scheme(path.substr(0,colon));
     for(auto& ch:scheme)ch=std::towlower(ch);
-    return scheme==L"http"||scheme==L"https"||scheme==L"rtsp"||datagramMediaInput(path);
+    return scheme==L"http"||scheme==L"https"||scheme==L"rtsp"||datagramMediaInput(path)||srtMediaInput(path);
 }
 // A file on a server: a UNC path (\\host\share\...) or a drive letter mapped to a
 // network share (GetDriveType == DRIVE_REMOTE). Local extended paths (\\?\C:\...)
